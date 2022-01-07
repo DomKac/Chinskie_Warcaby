@@ -8,7 +8,6 @@ class Ramka extends JFrame {
 
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     JButton[][] pola_planszy = new JButton[19][29];
-    int liczba_opcji_ruchu;
 
     final int[][] plansza = {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -31,8 +30,6 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
-
-
 
 
     public int get_current_X(String coordinates){
@@ -82,13 +79,33 @@ class Ramka extends JFrame {
          */
     }
 
+    public void check_W(int currentX, int currentY){
+
+        int possibleX;
+        int possibleY;
+
+        if(pola_planszy[currentX][currentY-2] != null){
+
+            possibleX = currentX;
+            possibleY = currentY-2;
+            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
+                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
+            }
+            else   {
+                check_W(possibleX,possibleY);
+            }
+
+        }
+    }
+
+
 
     public void koloruj_mozliwe_pola(int currentX,int currentY){
 
         int possibleX;
         int possibleY;
 
-
+        /*
         if(pola_planszy[currentX][currentY-2] != null){
 
             possibleX = currentX;
@@ -96,6 +113,9 @@ class Ramka extends JFrame {
 
             koloruj_pole(possibleX,possibleY);
         }
+
+         */
+        check_W(currentX,currentY);
         if(pola_planszy[currentX][currentY+2] != null){
 
             possibleX = currentX;
