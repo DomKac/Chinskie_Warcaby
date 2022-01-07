@@ -55,7 +55,8 @@ class Ramka extends JFrame {
         }
         return Integer.parseInt(y);
     }
-    // TODO: 
+
+    // TODO: combo
 
     public void koloruj_mozliwe_pola(int currentX,int currentY){
 
@@ -91,6 +92,41 @@ class Ramka extends JFrame {
         }
     }
 
+    public void clear_grey(int previousX, int previousY) {
+        if(pola_planszy[previousX][previousY-2] != null){
+            if(pola_planszy[previousX][previousY-2].getBackground() == Color.GRAY) {
+                pola_planszy[previousX][previousY - 2].setBackground(Color.WHITE);
+            }
+        }
+        if(pola_planszy[previousX][previousY+2] != null){
+            if(pola_planszy[previousX][previousY+2].getBackground() == Color.GRAY) {
+                pola_planszy[previousX][previousY + 2].setBackground(Color.WHITE);
+            }
+        }
+        if(pola_planszy[previousX-1][previousY-1] != null){
+            if(pola_planszy[previousX-1][previousY-1].getBackground() == Color.GRAY) {
+                pola_planszy[previousX - 1][previousY - 1].setBackground(Color.WHITE);
+            }
+        }
+        if(pola_planszy[previousX+1][previousY+1] != null){
+            if(pola_planszy[previousX+1][previousY+1].getBackground() == Color.GRAY) {
+                pola_planszy[previousX + 1][previousY + 1].setBackground(Color.WHITE);
+            }
+        }
+        if(pola_planszy[previousX-1][previousY+1] != null){
+            if(pola_planszy[previousX-1][previousY+1].getBackground() == Color.GRAY) {
+                pola_planszy[previousX - 1][previousY + 1].setBackground(Color.WHITE);
+            }
+        }
+        if(pola_planszy[previousX+1][previousY-1] != null){
+            if(pola_planszy[previousX+1][previousY-1].getBackground() == Color.GRAY) {
+                pola_planszy[previousX + 1][previousY - 1].setBackground(Color.WHITE);
+            }
+        }
+
+    }
+
+
 
     public ActionListener wyb_pionek = new ActionListener() {
 
@@ -100,6 +136,8 @@ class Ramka extends JFrame {
         Color kolor_piona;
         int currentX;
         int currentY;
+        int previousX;
+        int previousY;
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -108,29 +146,43 @@ class Ramka extends JFrame {
             System.out.println(coordinates);
             currentX = get_current_X(coordinates);
             currentY = get_current_Y(coordinates);
+
             System.out.println(currentX);
             System.out.println(currentY);
 
             System.out.println(wybrano_piona);
             if(wybrano_piona){
 
+                if(pola_planszy[currentX][currentY].getBackground() != Color.WHITE){
+
                 kolor_piona = pola_planszy[currentX][currentY].getBackground();
-
                 koloruj_mozliwe_pola(currentX, currentY);
-
+                previousX = currentX;
+                previousY = currentY;
                 wybrano_piona = false;
+
                 System.out.println("wybrano_piona: " + wybrano_piona);
                 System.out.println(kolor_piona);
                 System.out.println();
+                }
+                else{
+                    System.out.println("Wybierz kolorowe pole ");
+                }
             }
             else{
-                System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
-                System.out.println(kolor_piona);
-                pola_planszy[currentX][currentY].setBackground(kolor_piona);
-
-                System.out.println("wybrano_piona: " + wybrano_piona);
-                System.out.println();
-                wybrano_piona = true;
+                if(pola_planszy[currentX][currentY].getBackground() == Color.GRAY) {
+                    System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
+                    System.out.println(kolor_piona);
+                    pola_planszy[currentX][currentY].setBackground(kolor_piona);
+                    pola_planszy[previousX][previousY].setBackground(Color.WHITE);
+                    clear_grey(previousX,previousY);
+                    System.out.println("wybrano_piona: " + wybrano_piona);
+                    System.out.println();
+                    wybrano_piona = true;
+                }
+                else{
+                    System.out.println("zle pole debilu");
+                }
             }
 
         }
