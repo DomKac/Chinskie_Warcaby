@@ -8,9 +8,9 @@ class Ramka extends JFrame {
 
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     JButton[][] pola_planszy = new JButton[19][29];
+    int liczba_opcji_ruchu;
 
-
-    int[][] plansza = {
+    final int[][] plansza = {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -29,7 +29,10 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1, 4,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 4,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
-            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}};
+            {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
+    };
+
+
 
 
     public int get_current_X(String coordinates){
@@ -85,6 +88,7 @@ class Ramka extends JFrame {
         int possibleX;
         int possibleY;
 
+
         if(pola_planszy[currentX][currentY-2] != null){
 
             possibleX = currentX;
@@ -127,6 +131,7 @@ class Ramka extends JFrame {
 
             koloruj_pole(possibleX,possibleY);
         }
+
     }
 
     public void clear_grey(int previousX, int previousY) {
@@ -210,7 +215,10 @@ class Ramka extends JFrame {
                     pola_planszy[currentX][currentY].setBackground(kolor_piona);
                     pola_planszy[previousX][previousY].setBackground(Color.WHITE);
                     clear_grey(previousX,previousY);
-                    System.out.println();
+                    wybrano_piona = true;
+                }
+                else if (previousX == currentX && previousY == currentY){
+                    clear_grey(previousX,previousY);
                     wybrano_piona = true;
                 }
                 else{
@@ -246,33 +254,84 @@ class Ramka extends JFrame {
                     pola_planszy[x][y].addActionListener(wyb_pionek);
                     this.add(pola_planszy[x][y]);
 
-                    if (plansza[x][y] == 1) {
-                        this.pola_planszy[x][y].setBackground(Color.PINK);
-                    }
-                    else if (plansza[x][y] == 2) {
-                        this.pola_planszy[x][y].setBackground(Color.ORANGE);
-                    }
-                    else if (plansza[x][y] == 3) {
-                        this.pola_planszy[x][y].setBackground(Color.YELLOW);
-                    }
-                    else if (plansza[x][y] == 4) {
-                        this.pola_planszy[x][y].setBackground(Color.BLUE);
-                    }
-                    else if (plansza[x][y] == 5) {
-                        this.pola_planszy[x][y].setBackground(Color.RED);
-                    }
-                    else if (plansza[x][y] == 6) {
-                        this.pola_planszy[x][y].setBackground(Color.GREEN);
-                    }
-                    else {
-                        this.pola_planszy[x][y].setBackground(Color.WHITE);
-                    }
-
+                    koloruj_pole_w_zaleznosci_od_liczby_graczy(x,y,liczba_graczy);
                 }
             }
         }
         setResizable(true);
     }
+
+    public void koloruj_pole_w_zaleznosci_od_liczby_graczy(int x, int y, int liczba_graczy){
+
+        if(liczba_graczy==2){
+            if (plansza[x][y] == 1) {
+                pola_planszy[x][y].setBackground(Color.PINK);
+            }
+            else if (plansza[x][y] == 4) {
+                pola_planszy[x][y].setBackground(Color.BLUE);
+            }
+            else {
+                pola_planszy[x][y].setBackground(Color.WHITE);
+            }
+        }
+        else if (liczba_graczy==3){
+            if (plansza[x][y] == 1) {
+                pola_planszy[x][y].setBackground(Color.PINK);
+            }
+            else if (plansza[x][y] == 3) {
+                pola_planszy[x][y].setBackground(Color.YELLOW);
+            }
+            else if (plansza[x][y] == 5) {
+                pola_planszy[x][y].setBackground(Color.RED);
+            }
+            else {
+                pola_planszy[x][y].setBackground(Color.WHITE);
+            }
+        }
+        else if (liczba_graczy==4){
+            if (plansza[x][y] == 2) {
+                pola_planszy[x][y].setBackground(Color.ORANGE);
+            }
+            else if (plansza[x][y] == 3) {
+                pola_planszy[x][y].setBackground(Color.YELLOW);
+            }
+            else if (plansza[x][y] == 5) {
+                pola_planszy[x][y].setBackground(Color.RED);
+            }
+            else if (plansza[x][y] == 6) {
+                pola_planszy[x][y].setBackground(Color.GREEN);
+            }
+            else {
+                pola_planszy[x][y].setBackground(Color.WHITE);
+            }
+        }
+        else if (liczba_graczy==6){
+            if (plansza[x][y] == 1) {
+                pola_planszy[x][y].setBackground(Color.PINK);
+            }
+            else if (plansza[x][y] == 2) {
+                pola_planszy[x][y].setBackground(Color.ORANGE);
+            }
+            else if (plansza[x][y] == 3) {
+                pola_planszy[x][y].setBackground(Color.YELLOW);
+            }
+            else if (plansza[x][y] == 4) {
+                pola_planszy[x][y].setBackground(Color.BLUE);
+            }
+            else if (plansza[x][y] == 5) {
+                pola_planszy[x][y].setBackground(Color.RED);
+            }
+            else if (plansza[x][y] == 6) {
+                pola_planszy[x][y].setBackground(Color.GREEN);
+            }
+            else {
+                pola_planszy[x][y].setBackground(Color.WHITE);
+            }
+        }
+
+
+    }
+
 }
 
 
@@ -293,7 +352,7 @@ public class testy {
      */
     public static void main(String[] args){
         testy p = new testy();
-        p.frame = new Ramka(6);
+        p.frame = new Ramka(6 );
         p.frame.setVisible(true);
     }
 }
