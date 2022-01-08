@@ -84,8 +84,10 @@ class Ramka extends JFrame {
 
         if(pola_planszy[neighbourX][neighbourY] != null && pola_planszy[next_neighbourX][next_neighbourY] != null){
             if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_ALL(next_neighbourX,next_neighbourY);
+                if(pola_planszy[next_neighbourX][next_neighbourY].getBackground()==Color.WHITE) {
+                    pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
+                    check_jump_ALL(next_neighbourX, next_neighbourY);
+                }
             }
         }
     }
@@ -98,12 +100,7 @@ class Ramka extends JFrame {
         int next_neighbourX = neighbourX;
         int next_neighbourY = neighbourY-2;
 
-        if(pola_planszy[neighbourX][neighbourY] != null){
-            if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_W(next_neighbourX,next_neighbourY);
-            }
-        }
+        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
     }
     public void check_jump_E(int currentX, int currentY){
 
@@ -112,12 +109,7 @@ class Ramka extends JFrame {
         int next_neighbourX = neighbourX;
         int next_neighbourY = neighbourY+2;
 
-        if(pola_planszy[neighbourX][neighbourY] != null){
-            if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_E(next_neighbourX,next_neighbourY);
-            }
-        }
+        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
     }
 
     public void check_jump_NW(int currentX, int currentY){
@@ -127,12 +119,7 @@ class Ramka extends JFrame {
         int next_neighbourX = neighbourX-1;
         int next_neighbourY = neighbourY-1;
 
-        if(pola_planszy[neighbourX][neighbourY] != null){
-            if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_NW(next_neighbourX,next_neighbourY);
-            }
-        }
+        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
     }
 
     public void check_jump_SW(int currentX, int currentY){
@@ -142,12 +129,7 @@ class Ramka extends JFrame {
         int next_neighbourX = neighbourX+1;
         int next_neighbourY = neighbourY-1;
 
-        if(pola_planszy[neighbourX][neighbourY] != null){
-            if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_SW(next_neighbourX,next_neighbourY);
-            }
-        }
+        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
     }
 
     public void check_jump_NE(int currentX, int currentY){
@@ -157,12 +139,7 @@ class Ramka extends JFrame {
         int next_neighbourX = neighbourX-1;
         int next_neighbourY = neighbourY+1;
 
-        if(pola_planszy[neighbourX][neighbourY] != null){
-            if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_NE(next_neighbourX,next_neighbourY);
-            }
-        }
+        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
     }
     public void check_jump_SE(int currentX, int currentY){
 
@@ -171,12 +148,7 @@ class Ramka extends JFrame {
         int next_neighbourX = neighbourX+1;
         int next_neighbourY = neighbourY+1;
 
-        if(pola_planszy[neighbourX][neighbourY] != null){
-            if (pola_planszy[neighbourX][neighbourY].getBackground() != Color.WHITE && pola_planszy[neighbourX][neighbourY].getBackground() != Color.GRAY){
-                pola_planszy[next_neighbourX][next_neighbourY].setBackground(Color.GRAY);
-                check_jump_SE(next_neighbourX,next_neighbourY);
-            }
-        }
+        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
     }
 
     public void check_jump_ALL(int currentX, int currentY){
@@ -305,7 +277,7 @@ class Ramka extends JFrame {
          */
 
         make_ALL_neighbours_grey(currentX,currentY);
-        //check_jump_ALL(currentX,currentY);
+        check_jump_ALL(currentX,currentY);
 
     }
 
