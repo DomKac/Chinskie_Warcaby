@@ -116,6 +116,47 @@ class Ramka extends JFrame {
         }
     }
 
+    public boolean check_win_BLUE(){
+        return (pola_planszy[1][14].getBackground() == Color.BLUE && pola_planszy[2][13].getBackground() == Color.BLUE && pola_planszy[2][15].getBackground() == Color.BLUE &&
+                pola_planszy[3][12].getBackground() == Color.BLUE && pola_planszy[3][14].getBackground() == Color.BLUE && pola_planszy[3][16].getBackground() == Color.BLUE &&
+                pola_planszy[4][11].getBackground() == Color.BLUE && pola_planszy[4][13].getBackground() == Color.BLUE && pola_planszy[4][15].getBackground() == Color.BLUE &&
+                pola_planszy[4][17].getBackground() == Color.BLUE);
+    }
+    public boolean check_win_PINK(){
+        return (pola_planszy[17][14].getBackground() == Color.PINK && pola_planszy[16][13].getBackground() == Color.PINK && pola_planszy[16][15].getBackground() == Color.PINK &&
+                pola_planszy[15][12].getBackground() == Color.PINK && pola_planszy[15][14].getBackground() == Color.PINK && pola_planszy[15][16].getBackground() == Color.PINK &&
+                pola_planszy[14][11].getBackground() == Color.PINK && pola_planszy[14][13].getBackground() == Color.PINK && pola_planszy[14][15].getBackground() == Color.PINK &&
+                pola_planszy[14][17].getBackground() == Color.PINK);
+    }
+    public boolean check_win_RED(){
+        return (pola_planszy[5][2].getBackground() == Color.RED && pola_planszy[5][4].getBackground() == Color.RED && pola_planszy[5][6].getBackground() == Color.RED &&
+                pola_planszy[5][8].getBackground() == Color.RED && pola_planszy[6][3].getBackground() == Color.RED && pola_planszy[6][5].getBackground() == Color.RED &&
+                pola_planszy[6][7].getBackground() == Color.RED && pola_planszy[7][4].getBackground() == Color.RED && pola_planszy[7][6].getBackground() == Color.RED &&
+                pola_planszy[8][5].getBackground() == Color.RED);
+    }
+    public boolean check_win_GREEN(){
+        return (pola_planszy[13][2].getBackground() == Color.GREEN && pola_planszy[13][4].getBackground() == Color.GREEN && pola_planszy[13][6].getBackground() == Color.GREEN &&
+                pola_planszy[13][8].getBackground() == Color.GREEN && pola_planszy[12][3].getBackground() == Color.GREEN && pola_planszy[12][5].getBackground() == Color.GREEN &&
+                pola_planszy[12][7].getBackground() == Color.GREEN && pola_planszy[11][4].getBackground() == Color.GREEN && pola_planszy[11][6].getBackground() == Color.GREEN &&
+                pola_planszy[10][5].getBackground() == Color.GREEN);
+    }
+    public boolean check_win_ORANGE(){
+        return (pola_planszy[13][20].getBackground() == Color.ORANGE && pola_planszy[13][22].getBackground() == Color.ORANGE && pola_planszy[13][24].getBackground() == Color.ORANGE &&
+                pola_planszy[13][26].getBackground() == Color.ORANGE && pola_planszy[12][21].getBackground() == Color.ORANGE && pola_planszy[12][23].getBackground() == Color.ORANGE &&
+                pola_planszy[12][25].getBackground() == Color.ORANGE && pola_planszy[11][22].getBackground() == Color.ORANGE && pola_planszy[11][24].getBackground() == Color.ORANGE &&
+                pola_planszy[10][23].getBackground() == Color.ORANGE);
+    }
+    public boolean check_win_YELLOW(){
+        return (pola_planszy[5][20].getBackground() == Color.YELLOW && pola_planszy[5][22].getBackground() == Color.YELLOW && pola_planszy[5][24].getBackground() == Color.YELLOW &&
+                pola_planszy[5][26].getBackground() == Color.YELLOW && pola_planszy[6][21].getBackground() == Color.YELLOW && pola_planszy[6][23].getBackground() == Color.YELLOW &&
+                pola_planszy[6][25].getBackground() == Color.YELLOW && pola_planszy[7][22].getBackground() == Color.YELLOW && pola_planszy[7][24].getBackground() == Color.YELLOW &&
+                pola_planszy[8][23].getBackground() == Color.YELLOW);
+    }
+
+    public boolean check_ENDGAME(){
+        return check_win_BLUE() || check_win_YELLOW() || check_win_GREEN() || check_win_PINK() || check_win_RED() || check_win_ORANGE();
+    }
+
 
     public ActionListener wyb_pionek = new ActionListener() {
 
@@ -136,9 +177,6 @@ class Ramka extends JFrame {
             System.out.println(coordinates);
             currentX = get_current_X(coordinates);
             currentY = get_current_Y(coordinates);
-
-            System.out.println(currentX);
-            System.out.println(currentY);
 
             if(wybrano_piona){
 
@@ -163,6 +201,10 @@ class Ramka extends JFrame {
                     pola_planszy[currentX][currentY].setBackground(kolor_piona);
                     pola_planszy[previousX][previousY].setBackground(Color.WHITE);
                     clear_grey();
+                    if(check_ENDGAME()){
+                        System.out.println("KONIEC!");
+                        System.exit(0);
+                    }
                     wybrano_piona = true;
                 }
                 else if (previousX == currentX && previousY == currentY){
