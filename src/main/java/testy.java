@@ -41,6 +41,7 @@ class Ramka extends JFrame {
             i++;
 
         }
+
         return Integer.parseInt(x);
     }
 
