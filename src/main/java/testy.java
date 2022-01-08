@@ -31,7 +31,6 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
 
-
     public int get_current_X(String coordinates){
 
         String x = "";
@@ -39,9 +38,7 @@ class Ramka extends JFrame {
         while (coordinates.charAt(i) != ','){
             x = x + coordinates.charAt(i);
             i++;
-
         }
-
         return Integer.parseInt(x);
     }
 
@@ -60,7 +57,6 @@ class Ramka extends JFrame {
         return Integer.parseInt(y);
     }
 
-    // TODO: combo
 
     public void make_neighbour_grey(int neighbourX, int neighbourY){
 
@@ -92,196 +88,23 @@ class Ramka extends JFrame {
         }
     }
 
-
-    public void check_jump_W(int currentX, int currentY){
-
-        int neighbourX = currentX;
-        int neighbourY = currentY-2;
-        int next_neighbourX = neighbourX;
-        int next_neighbourY = neighbourY-2;
-
-        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
-    }
-    public void check_jump_E(int currentX, int currentY){
-
-        int neighbourX = currentX;
-        int neighbourY = currentY+2;
-        int next_neighbourX = neighbourX;
-        int next_neighbourY = neighbourY+2;
-
-        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
-    }
-
-    public void check_jump_NW(int currentX, int currentY){
-
-        int neighbourX = currentX-1;
-        int neighbourY = currentY-1;
-        int next_neighbourX = neighbourX-1;
-        int next_neighbourY = neighbourY-1;
-
-        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
-    }
-
-    public void check_jump_SW(int currentX, int currentY){
-
-        int neighbourX = currentX+1;
-        int neighbourY = currentY-1;
-        int next_neighbourX = neighbourX+1;
-        int next_neighbourY = neighbourY-1;
-
-        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
-    }
-
-    public void check_jump_NE(int currentX, int currentY){
-
-        int neighbourX = currentX-1;
-        int neighbourY = currentY+1;
-        int next_neighbourX = neighbourX-1;
-        int next_neighbourY = neighbourY+1;
-
-        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
-    }
-    public void check_jump_SE(int currentX, int currentY){
-
-        int neighbourX = currentX+1;
-        int neighbourY = currentY+1;
-        int next_neighbourX = neighbourX+1;
-        int next_neighbourY = neighbourY+1;
-
-        mark_possible_jumps(neighbourX,neighbourY,next_neighbourX,next_neighbourY);
-    }
-
     public void check_jump_ALL(int currentX, int currentY){
-        check_jump_W(currentX,currentY);
-        check_jump_E(currentX,currentY);
-        check_jump_NW(currentX,currentY);
-        check_jump_SW(currentX,currentY);
-        check_jump_NE(currentX,currentY);
-        check_jump_SE(currentX,currentY);
+        mark_possible_jumps(currentX,currentY-2,currentX,currentY-4); // jump na zachód
+        mark_possible_jumps(currentX,currentY+2,currentX,currentY+4); // jump na wschód
+        mark_possible_jumps(currentX-1,currentY-1,currentX-2,currentY-2); // jump na północny-zachód
+        mark_possible_jumps(currentX-1,currentY+1,currentX-2,currentY+2); // jump na północny-wschód
+        mark_possible_jumps(currentX+1,currentY-1,currentX+2,currentY-2); // jump na południowy-zachód
+        mark_possible_jumps(currentX+1,currentY+1,currentX+2,currentY+2); // jump na południowy-wschód
     }
-
-
-
-    public void check_W(int currentX, int currentY){
-
-        int neighbourX = currentX;
-        int neighbourY = currentY-2;
-
-        make_neighbour_grey(neighbourX,neighbourY);
-    }
-    public void check_NW(int currentX, int currentY){
-
-        int possibleX = currentX-1;
-        int possibleY = currentY-1;
-
-        if(pola_planszy[possibleX][possibleY] != null){
-
-            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
-                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
-            }
-            else {
-                if(pola_planszy[possibleX-1][possibleY-1] != null && pola_planszy[possibleX-1][possibleY-1].getBackground()==Color.WHITE) {
-                    check_NW(possibleX, possibleY);
-                }
-            }
-
-        }
-    }
-    public void check_SW(int currentX, int currentY){
-
-        int possibleX = currentX+1;
-        int possibleY = currentY-1;
-
-        if(pola_planszy[possibleX][possibleY] != null){
-
-            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
-                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
-            }
-            else {
-                if(pola_planszy[possibleX+1][possibleY-1] != null && pola_planszy[possibleX+1][possibleY-1].getBackground()==Color.WHITE) {
-                    check_SW(possibleX, possibleY);
-                }
-            }
-
-        }
-    }
-    public void check_E(int currentX, int currentY){
-
-        int possibleX = currentX;
-        int possibleY = currentY+2;
-
-        if(pola_planszy[possibleX][possibleY] != null){
-
-            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
-                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
-            }
-            else {
-                if(pola_planszy[possibleX][possibleY+2] != null && pola_planszy[possibleX][possibleY+2].getBackground()==Color.WHITE) {
-                    check_E(possibleX, possibleY);
-                }
-            }
-
-        }
-    }
-
-    public void check_NE(int currentX, int currentY){
-
-        int possibleX = currentX-1;
-        int possibleY = currentY+1;
-
-        if(pola_planszy[possibleX][possibleY] != null){
-
-            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
-                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
-            }
-            else {
-                if(pola_planszy[possibleX-1][possibleY+1] != null && pola_planszy[possibleX-1][possibleY+1].getBackground()==Color.WHITE) {
-                    check_NE(possibleX, possibleY);
-                }
-            }
-
-        }
-    }
-    public void check_SE(int currentX, int currentY){
-
-        int possibleX = currentX+1;
-        int possibleY = currentY+1;
-
-        if(pola_planszy[possibleX][possibleY] != null){
-            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
-                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
-            }
-            else {
-                if(pola_planszy[possibleX+1][possibleY+1] != null && pola_planszy[possibleX+1][possibleY+1].getBackground()==Color.WHITE) {
-                    check_SE(possibleX, possibleY);
-                }
-            }
-
-        }
-    }
-
-    // osobna metoda badająca najbliższe otoczenie wybranego pionka
-    // i osobna metoda sprawdzająca możliwe skoki nad pionkami
-
 
     public void check_ALL(int currentX, int currentY){
-
-        /*
-        check_W(currentX,currentY);
-        check_SW(currentX,currentY);
-        check_NW(currentX,currentY);
-        check_E(currentX,currentY);
-        check_SE(currentX,currentY);
-        check_NE(currentX,currentY);
-        check_jump_W(currentX,currentY);
-         */
 
         make_ALL_neighbours_grey(currentX,currentY);
         check_jump_ALL(currentX,currentY);
 
     }
 
-    void clear_grey_2(){
+    void clear_grey(){
         for(int x=1; x<=17; x++){
             for (int y=2; y<=26; y++){
                 if(pola_planszy[x][y] != null){
@@ -339,21 +162,17 @@ class Ramka extends JFrame {
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
                     pola_planszy[currentX][currentY].setBackground(kolor_piona);
                     pola_planszy[previousX][previousY].setBackground(Color.WHITE);
-                    //clear_grey(previousX,previousY);
-                    clear_grey_2();
+                    clear_grey();
                     wybrano_piona = true;
                 }
                 else if (previousX == currentX && previousY == currentY){
-                    //clear_grey(previousX,previousY);
-                    clear_grey_2();
+                    clear_grey();
                     wybrano_piona = true;
                 }
                 else{
                     System.out.println("zle pole debilu");
                 }
-
             }
-
         }
     };
 
