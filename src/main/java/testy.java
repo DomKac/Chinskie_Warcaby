@@ -91,8 +91,110 @@ class Ramka extends JFrame {
             if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
                 pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
             }
-            else   {
-                check_W(possibleX,possibleY);
+            else {
+                if(pola_planszy[possibleX][possibleY-2] != null && pola_planszy[possibleX][possibleY-2].getBackground()==Color.WHITE) {
+                    check_W(possibleX, possibleY);
+                }
+            }
+
+        }
+    }
+    public void check_NW(int currentX, int currentY){
+
+        int possibleX;
+        int possibleY;
+
+        if(pola_planszy[currentX-1][currentY-1] != null){
+
+            possibleX = currentX-1;
+            possibleY = currentY-1;
+            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
+                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
+            }
+            else {
+                if(pola_planszy[possibleX-1][possibleY-1] != null && pola_planszy[possibleX-1][possibleY-1].getBackground()==Color.WHITE) {
+                    check_NW(possibleX, possibleY);
+                }
+            }
+
+        }
+    }
+    public void check_SW(int currentX, int currentY){
+
+        int possibleX;
+        int possibleY;
+
+        if(pola_planszy[currentX+1][currentY-1] != null){
+
+            possibleX = currentX+1;
+            possibleY = currentY-1;
+            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
+                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
+            }
+            else {
+                if(pola_planszy[possibleX+1][possibleY-1] != null && pola_planszy[possibleX+1][possibleY-1].getBackground()==Color.WHITE) {
+                    check_SW(possibleX, possibleY);
+                }
+            }
+
+        }
+    }
+    public void check_E(int currentX, int currentY){
+
+        int possibleX;
+        int possibleY;
+
+        if(pola_planszy[currentX][currentY+2] != null){
+
+            possibleX = currentX;
+            possibleY = currentY+2;
+            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
+                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
+            }
+            else {
+                if(pola_planszy[possibleX][possibleY+2] != null && pola_planszy[possibleX][possibleY+2].getBackground()==Color.WHITE) {
+                    check_E(possibleX, possibleY);
+                }
+            }
+
+        }
+    }
+    public void check_NE(int currentX, int currentY){
+
+        int possibleX;
+        int possibleY;
+
+        if(pola_planszy[currentX-1][currentY+1] != null){
+
+            possibleX = currentX-1;
+            possibleY = currentY+1;
+            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
+                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
+            }
+            else {
+                if(pola_planszy[possibleX-1][possibleY+1] != null && pola_planszy[possibleX-1][possibleY+1].getBackground()==Color.WHITE) {
+                    check_NE(possibleX, possibleY);
+                }
+            }
+
+        }
+    }
+    public void check_SE(int currentX, int currentY){
+
+        int possibleX;
+        int possibleY;
+
+        if(pola_planszy[currentX+1][currentY+1] != null){
+
+            possibleX = currentX+1;
+            possibleY = currentY+1;
+            if(pola_planszy[possibleX][possibleY].getBackground() == Color.WHITE) {
+                pola_planszy[possibleX][possibleY].setBackground(Color.GRAY);
+            }
+            else {
+                if(pola_planszy[possibleX+1][possibleY+1] != null && pola_planszy[possibleX+1][possibleY+1].getBackground()==Color.WHITE) {
+                    check_SE(possibleX, possibleY);
+                }
             }
 
         }
@@ -102,10 +204,18 @@ class Ramka extends JFrame {
 
     public void koloruj_mozliwe_pola(int currentX,int currentY){
 
+        check_W(currentX,currentY);
+        check_SW(currentX,currentY);
+        check_NW(currentX,currentY);
+        check_E(currentX,currentY);
+        check_SE(currentX,currentY);
+        check_NE(currentX,currentY);
+
+        /*
         int possibleX;
         int possibleY;
 
-        /*
+
         if(pola_planszy[currentX][currentY-2] != null){
 
             possibleX = currentX;
@@ -113,9 +223,6 @@ class Ramka extends JFrame {
 
             koloruj_pole(possibleX,possibleY);
         }
-
-         */
-        check_W(currentX,currentY);
         if(pola_planszy[currentX][currentY+2] != null){
 
             possibleX = currentX;
@@ -152,6 +259,20 @@ class Ramka extends JFrame {
             koloruj_pole(possibleX,possibleY);
         }
 
+         */
+
+    }
+
+    void clear_grey_2(){
+        for(int x=1; x<=17; x++){
+            for (int y=2; y<=26; y++){
+                if(pola_planszy[x][y] != null){
+                    if(pola_planszy[x][y].getBackground()==Color.GRAY){
+                        pola_planszy[x][y].setBackground(Color.WHITE);
+                    }
+                }
+            }
+        }
     }
 
     public void clear_grey(int previousX, int previousY) {
@@ -234,16 +355,19 @@ class Ramka extends JFrame {
                     System.out.println("Teraz nalezy wybrac gdzie sie ruszyc");
                     pola_planszy[currentX][currentY].setBackground(kolor_piona);
                     pola_planszy[previousX][previousY].setBackground(Color.WHITE);
-                    clear_grey(previousX,previousY);
+                    //clear_grey(previousX,previousY);
+                    clear_grey_2();
                     wybrano_piona = true;
                 }
                 else if (previousX == currentX && previousY == currentY){
-                    clear_grey(previousX,previousY);
+                    //clear_grey(previousX,previousY);
+                    clear_grey_2();
                     wybrano_piona = true;
                 }
                 else{
                     System.out.println("zle pole debilu");
                 }
+
             }
 
         }
