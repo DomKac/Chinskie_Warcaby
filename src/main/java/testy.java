@@ -4,10 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-class Ramka extends JFrame {
+class MainPanel extends JPanel {
 
     /** * Tablica guzikow, ktore beda naszymi polami planszy**/
     public JButton[][] pola_planszy = new JButton[19][29];
+    public JPanel[][] niegrywalne_pola = new JPanel[19][29];
 
     final int[][] plansza = {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
@@ -31,6 +32,8 @@ class Ramka extends JFrame {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1}
     };
 
+
+
     public int get_current_X(String coordinates){
 
         String x = "";
@@ -41,6 +44,7 @@ class Ramka extends JFrame {
         }
         return Integer.parseInt(x);
     }
+
 
     public int get_current_Y(String coordinates){
 
@@ -203,7 +207,7 @@ class Ramka extends JFrame {
                     clear_grey();
                     if(check_ENDGAME()){
                         System.out.println("KONIEC!");
-                        System.exit(0);
+                        //System.exit(0);
                     }
                     wybrano_piona = true;
                 }
@@ -222,11 +226,18 @@ class Ramka extends JFrame {
     /**
      * Tworzenie planszy
      */
-    Ramka(int liczba_graczy){
-        super("Chinskie Warcaby");
-        setBounds(200,200,640,480);
-        addWindowListener(new MyWindowAdapter());
+    MainPanel(int liczba_graczy){
+        //super("Chinskie Warcaby");
+        //setBounds(200,200,640,480);
+        //addWindowListener(new MyWindowAdapter());
+        //setLayout(new BorderLayout());
+       // JLabel text = new JLabel("Dduppa");
+        //this.add(text,BorderLayout.PAGE_START);
+        //JButton pass = new JButton("PASS");
+        //this.add(pass, BorderLayout.PAGE_END);
+        //JPanel panel_plansza = new JPanel();
         setLayout(new GridLayout(19, 29));
+        //this.add(panel_plansza);
 
         for(int x=0;x<19;x++)
         {
@@ -234,8 +245,8 @@ class Ramka extends JFrame {
 
                 if (plansza[x][y] == -1){
 
-                    JPanel niegrywalne_pole = new JPanel();
-                    this.add(niegrywalne_pole);
+                    niegrywalne_pola[x][y] = new JPanel();
+                    this.add(niegrywalne_pola[x][y]);
                 }
                 else {
                     pola_planszy[x][y] = new JButton();
@@ -247,7 +258,7 @@ class Ramka extends JFrame {
                 }
             }
         }
-        setResizable(true);
+        //setResizable(true);
     }
 
     public void koloruj_pole_w_zaleznosci_od_liczby_graczy(int x, int y, int liczba_graczy){
@@ -323,6 +334,79 @@ class Ramka extends JFrame {
 
 }
 
+class InstrukcjaRamka extends JFrame{
+
+    InstrukcjaRamka(){
+        super("Instrukcja");
+        JTextField text = new JTextField();
+        setBounds(200,200,640,560);
+        text.setEditable(false);
+        text.setBackground(Color.WHITE);
+        this.add(text);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    }
+
+}
+
+
+
+class Ramka extends JFrame{
+
+    MainPanel panel_z_plansza;
+
+
+
+    Ramka(int liczba_graczy){
+        super("Chinskie Warcaby");
+        setBounds(200,200,640,560);
+        addWindowListener(new MyWindowAdapter());
+        setLayout(new BorderLayout());
+
+        panel_z_plansza = new MainPanel(liczba_graczy);
+        this.add(panel_z_plansza,BorderLayout.CENTER);
+
+        JPanel up_panel = new JPanel();
+        up_panel.setLayout(new GridLayout(1,2));
+        this.add(up_panel, BorderLayout.PAGE_START);
+        JPanel down_panel = new JPanel();
+        up_panel.setLayout(new GridLayout(1,2));
+        this.add(down_panel, BorderLayout.PAGE_END);
+
+        JTextField which_player = new JTextField();
+        which_player.setEditable(false);
+        which_player.setText("Tura gracza: ");
+        which_player.setHorizontalAlignment(JTextField.CENTER);
+        which_player.setBackground(Color.WHITE);
+        up_panel.add(which_player);
+
+        JTextField your_color = new JTextField();
+        your_color.setEditable(false);
+        your_color.setText("Twój kolor to: ");
+        your_color.setHorizontalAlignment(JTextField.CENTER);
+        your_color.setBackground(Color.PINK);
+        up_panel.add(your_color);
+
+        ActionListener open_instruction = new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InstrukcjaRamka nowa_instrukcja = new InstrukcjaRamka();
+                nowa_instrukcja.setVisible(true);
+            }
+        };
+
+        JButton instrukcja = new JButton("Instrukcja");
+        down_panel.add(instrukcja);
+        instrukcja.addActionListener(open_instruction);
+
+        JButton pass = new JButton("PASS");
+        down_panel.add(pass);
+
+        setResizable(true);
+
+    }
+
+}
 
 /*--------------------------------------------------------------------*/
 
@@ -332,7 +416,7 @@ class Ramka extends JFrame {
 
 public class testy {
 
-    /** * Tworzenie ramki o własciowsciach klasy "Ramka" */
+    /** * Tworzenie ramki o własciowsciach klasy "MainPanel" */
     public Ramka frame;
 
     /**
@@ -341,7 +425,8 @@ public class testy {
      */
     public static void main(String[] args){
         testy p = new testy();
-        p.frame = new Ramka(6 );
+        p.frame = new Ramka(6);
         p.frame.setVisible(true);
+
     }
 }
