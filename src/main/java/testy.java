@@ -10,6 +10,7 @@ class MainPanel extends JPanel {
     public JButton[][] pola_planszy = new JButton[19][29];
     public JPanel[][] niegrywalne_pola = new JPanel[19][29];
 
+
     final int[][] plansza = {
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
             {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1, 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1},
